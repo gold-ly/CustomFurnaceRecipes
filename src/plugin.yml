@@ -1,0 +1,4 @@
+name: CustomFurnaceRecipes
+author: Gero
+version: 0.0.1
+main: de.lowkeys.customfurnacerecipes.main.CustomFurnaceRecipes
