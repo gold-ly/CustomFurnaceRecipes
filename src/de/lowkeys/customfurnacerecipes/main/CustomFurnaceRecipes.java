@@ -42,19 +42,19 @@ public class CustomFurnaceRecipes extends JavaPlugin {
             return;
         }
 
-        try {
-            for(String source : scrapList) {
+        for (String source : scrapList) {
+            try {
                 ItemStack resultStack = new ItemStack(Material.getMaterial(this.getConfig().getString(source + ".result")));
+
                 resultStack.setAmount(this.getConfig().getInt(source + ".amount"));
 
                 FurnaceRecipe furnaceRecipe = new FurnaceRecipe(resultStack, Material.getMaterial(source));
 
                 Bukkit.addRecipe(furnaceRecipe);
+            } catch (Exception exception) {
+                System.out.println("Error at entry: " + source);
             }
-        } catch (Exception exception) {
-            System.out.println("There was an error loading the config file, check the entrys for mistakes.");
+
         }
-
-
     }
 }
