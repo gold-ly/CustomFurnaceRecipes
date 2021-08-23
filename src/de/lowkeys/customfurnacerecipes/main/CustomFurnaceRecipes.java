@@ -25,31 +25,36 @@ public class CustomFurnaceRecipes extends JavaPlugin {
 
     private void addDefaultConfig() {
         ArrayList scrapList = new ArrayList();
-        scrapList.add("IRON_SWORD");
-        scrapList.add("GOLD_SWORD");
 
         this.getConfig().addDefault("scrapList", scrapList);
-
-        this.getConfig().addDefault("IRON_SWORD.result", "IRON_INGOT");
-        this.getConfig().addDefault("IRON_SWORD.amount", 2);
-
-        this.getConfig().addDefault("GOLD_SWORD.result", "GOLD_INGOT");
-        this.getConfig().addDefault("GOLD_SWORD.amount", 2);
 
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
     }
 
     private void generateRecipes() {
-        ArrayList<String> scrapList = (ArrayList) this.getConfig().getList("scrapList");
+        ArrayList<String> scrapList;
 
-        for(String source : scrapList) {
-            ItemStack resultStack = new ItemStack(Material.getMaterial(this.getConfig().getString(source + ".result")));
-            resultStack.setAmount(this.getConfig().getInt(source + ".amount"));
-
-            FurnaceRecipe furnaceRecipe = new FurnaceRecipe(resultStack, Material.getMaterial(source));
-
-            Bukkit.addRecipe(furnaceRecipe);
+        try {
+            scrapList = (ArrayList) this.getConfig().getList("scrapList");
+        } catch (Exception exception) {
+            System.out.println("Couldn't find config entry 'scrapList'");
+            return;
         }
+
+        try {
+            for(String source : scrapList) {
+                ItemStack resultStack = new ItemStack(Material.getMaterial(this.getConfig().getString(source + ".result")));
+                resultStack.setAmount(this.getConfig().getInt(source + ".amount"));
+
+                FurnaceRecipe furnaceRecipe = new FurnaceRecipe(resultStack, Material.getMaterial(source));
+
+                Bukkit.addRecipe(furnaceRecipe);
+            }
+        } catch (Exception exception) {
+            System.out.println("There was an error loading the config file, check the entrys for mistakes.");
+        }
+
+
     }
 }
