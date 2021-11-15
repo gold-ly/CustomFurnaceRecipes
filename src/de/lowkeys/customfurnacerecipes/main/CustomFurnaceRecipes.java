@@ -56,6 +56,8 @@ public class CustomFurnaceRecipes extends JavaPlugin {
                 resultStack.setAmount(this.getConfig().getInt(source + ".amount"));
 
                 FurnaceRecipe furnaceRecipe = new FurnaceRecipe(resultStack, Material.getMaterial(source));
+                furnaceRecipe.setCookingTime(this.getConfig().getInt(source + ".time"));
+                furnaceRecipe.setExperience(this.getConfig().getInt(source + ".exp"));
 
                 Bukkit.addRecipe(furnaceRecipe);
             } catch (Exception exception) {
